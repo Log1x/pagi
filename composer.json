@@ -1,0 +1,49 @@
+{
+  "name": "log1x/pagi",
+  "type": "package",
+  "license": "MIT",
+  "description": "A better WordPress pagination.",
+  "authors": [
+    {
+      "name": "Brandon Nifong",
+      "email": "brandon@tendency.me"
+    }
+  ],
+  "keywords": [
+    "wordpress",
+    "sage",
+    "roots",
+    "laravel",
+    "pagination"
+  ],
+  "support": {
+    "issues": "https://github.com/log1x/pagi/issues"
+  },
+  "autoload": {
+    "psr-4": {
+      "Log1x\\Pagi\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.2",
+    "illuminate/pagination": "^6.5"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.5"
+  },
+  "extra": {
+    "acorn": {
+      "providers": [
+        "Log1x\\Pagi\\PagiServiceProvider"
+      ],
+      "aliases": {
+        "Pagi": "Log1x\\Pagi\\PagiFacade"
+      }
+    }
+  },
+  "scripts": {
+    "lint": [
+      "phpcs --ignore=vendor,src/resources --extensions=php --standard=PSR12 ."
+    ]
+  }
+}
