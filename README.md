@@ -25,9 +25,9 @@ $ composer require log1x/pagi
 ### Basic Usage
 
 ```php
-use Log1x\Pagi\PagiFacade as PagiFacade;
+use Log1x\Pagi\PagiFacade as Pagi;
 
-$pagination = (new Pagi())->build();
+$pagination = Pagi::build();
 
 return $pagination->links();
 ```
