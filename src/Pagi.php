@@ -87,7 +87,7 @@ class Pagi
             $this->items,
             $this->items->count(),
             $this->perPage,
-            $this->currentPage,
+            $this->currentPage
         );
     }
 }
