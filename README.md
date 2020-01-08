@@ -40,6 +40,12 @@ To customize the view, simply publish it:
 $ wp acorn vendor:publish --provider='Log1x\Pagi\PagiServiceProvider'
 ```
 
+To use the newly generated view:
+
+```php
+return $pagination->links('components.pagination');
+```
+
 For additional configuration, check out the [Laravel Pagination](https://laravel.com/docs/master/pagination) documentation.
 
 ## Bug Reports
