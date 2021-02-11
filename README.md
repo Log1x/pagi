@@ -2,7 +2,7 @@
 
 ![Latest Stable Version](https://img.shields.io/packagist/v/log1x/pagi?style=flat-square)
 ![Total Downloads](https://img.shields.io/packagist/dt/log1x/pagi?style=flat-square)
-![Build Status](https://img.shields.io/github/workflow/status/log1x/pagi/Compatibility%20Checks?style=flat-square)
+![Build Status](https://img.shields.io/github/workflow/status/log1x/pagi/compatibility?style=flat-square)
 
 A better WordPress pagination utilizing [Laravel's Pagination](https://laravel.com/docs/master/pagination).
 
