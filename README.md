@@ -1,15 +1,15 @@
 # Pagi
 
 ![Latest Stable Version](https://img.shields.io/packagist/v/log1x/pagi?style=flat-square)
-![Build Status](https://img.shields.io/circleci/build/github/Log1x/pagi?style=flat-square)
 ![Total Downloads](https://img.shields.io/packagist/dt/log1x/pagi?style=flat-square)
+![Build Status](https://img.shields.io/github/workflow/status/log1x/pagi/Compatibility%20Checks?style=flat-square)
 
 A better WordPress pagination utilizing [Laravel's Pagination](https://laravel.com/docs/master/pagination).
 
 ## Requirements
 
 - [Sage](https://github.com/roots/sage) >= 10.0
-- [PHP](https://secure.php.net/manual/en/install.php) >= 7.2.5
+- [PHP](https://secure.php.net/manual/en/install.php) >= 7.3
 - [Composer](https://getcomposer.org/download/)
 
 ## Installation
