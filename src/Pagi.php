@@ -59,6 +59,16 @@ class Pagi
             return;
         }
 
+        $this->query->put('post_type', get_post_type());
+
+        if (is_tax()) {
+            $this->query->put('tax_query', [[
+                'taxonomy' => $this->query->get('taxonomy'),
+                'terms' => $this->query->get('term'),
+                'field' => 'name',
+            ]]);
+        }
+
         $this->perPage = $this->query->get('posts_per_page');
         $this->currentPage = max(1, absint(get_query_var('paged')));
 
