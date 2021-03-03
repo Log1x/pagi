@@ -35,6 +35,13 @@ class Pagi
     protected $perPage = 1;
 
     /**
+     * Total items count.
+     *
+     * @var int
+     */
+    protected $itemsCount = 1;
+
+    /**
      * Create a new Pagi instance.
      *
      * @return void
@@ -59,18 +66,21 @@ class Pagi
             return;
         }
 
-        $this->query->put('post_type', get_post_type());
+        if (!is_search()) {
+            $this->query->put('post_type', get_post_type());
 
-        if (is_tax()) {
-            $this->query->put('tax_query', [[
-                'taxonomy' => $this->query->get('taxonomy'),
-                'terms' => $this->query->get('term'),
-                'field' => 'name',
-            ]]);
+            if (is_tax()) {
+                $this->query->put('tax_query', [[
+                    'taxonomy' => $this->query->get('taxonomy'),
+                    'terms' => $this->query->get('term'),
+                    'field' => 'name',
+                ]]);
+            }
         }
 
-        $this->perPage = $this->query->get('posts_per_page');
+        $this->perPage = (int) \get_option('posts_per_page');
         $this->currentPage = max(1, absint(get_query_var('paged')));
+        $this->offset = 0 - ($this->perPage - $this->query->get('posts_per_page'));
 
         $this->items = $this->items->make(
             get_posts(
@@ -82,6 +92,8 @@ class Pagi
                 'url' => get_the_permalink($item->ID)
             ];
         });
+
+        $this->itemsCount = $this->items->count() + $this->offset;
     }
 
     /**
@@ -95,7 +107,7 @@ class Pagi
 
         return new LengthAwarePaginator(
             $this->items,
-            $this->items->count(),
+            $this->itemsCount,
             $this->perPage,
             $this->currentPage
         );
