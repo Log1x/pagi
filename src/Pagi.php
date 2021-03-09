@@ -78,7 +78,12 @@ class Pagi
             }
         }
 
-        $this->perPage = (int) \get_option('posts_per_page');
+        if (!\get_post_type_object(\get_post_type())->archive['posts_per_page'] !== null) {
+            $this->perPage = (int) \get_post_type_object(get_post_type())->archive['posts_per_page'];
+        } else {
+            $this->perPage = (int) \get_option('posts_per_page');
+        }
+
         $this->currentPage = max(1, absint(get_query_var('paged')));
         $this->offset = 0 - ($this->perPage - $this->query->get('posts_per_page'));
 
