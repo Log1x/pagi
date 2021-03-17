@@ -78,7 +78,7 @@ class Pagi
             }
         }
 
-        if (!\get_post_type_object(\get_post_type())->archive['posts_per_page'] !== null) {
+        if (\get_post_type_object(\get_post_type())->archive['posts_per_page'] !== null) {
             $this->perPage = (int) \get_post_type_object(get_post_type())->archive['posts_per_page'];
         } else {
             $this->perPage = (int) \get_option('posts_per_page');
