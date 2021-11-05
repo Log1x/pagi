@@ -1,5 +1,5 @@
 @if ($pagi->hasPages())
-  <nav class="flex items-center my-8" role="navigation" aria-label="pagination">
+  <nav class="flex items-center my-8" aria-label="pagination">
     @if (! $pagi->onFirstPage())
       <a
         href="{{ $pagi->previousPageUrl() }}"
