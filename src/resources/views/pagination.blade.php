@@ -14,7 +14,7 @@
     <ul class="flex">
       @foreach ($pagi->elements() as $element)
         @if (is_string($element))
-          <li class="disabled" aria-disabled="true">
+          <li class="disabled">
             <span class="mr-3 py-1">&hellip;</span>
           </li>
         @endif
