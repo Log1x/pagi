@@ -1,18 +1,20 @@
 @if ($pagi->hasPages())
-  <nav class="flex items-center my-8" role="navigation" aria-label="pagination">
+  <nav class="flex items-center my-8" aria-label="pagination">
     @if (! $pagi->onFirstPage())
       <a
         href="{{ $pagi->previousPageUrl() }}"
         rel="prev"
         aria-label="Previous Page"
         class="border rounded-sm mr-3 py-1 px-4 hover:bg-blue-600 hover:text-white"
-      >&larr; Previous</a>
+      >
+        <span aria-hidden="true">&larr; Previous</span>
+      </a>
     @endif
 
     <ul class="flex">
       @foreach ($pagi->elements() as $element)
         @if (is_string($element))
-          <li class="disabled" aria-disabled="true">
+          <li class="disabled">
             <span class="mr-3 py-1">&hellip;</span>
           </li>
         @endif
@@ -43,7 +45,9 @@
         rel="next"
         aria-label="Next Page"
         class="border rounded-sm mr-3 py-1 px-4 hover:bg-blue-600 hover:text-white"
-      >Next &rarr;</a>
+      >
+        <span aria-hidden="true">Next &rarr;</span>
+      </a>
     @endif
   </nav>
 @endif
