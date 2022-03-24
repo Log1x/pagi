@@ -53,7 +53,7 @@ class Pagi
     {
         $isGlobalQuery = false;
 
-        if (!isset($this->query)) {
+        if (! isset($this->query)) {
             $this->query = collect(
                 Arr::get($GLOBALS, 'wp_query')->query_vars ?? []
             )->filter();
@@ -109,6 +109,12 @@ class Pagi
         );
     }
 
+    /**
+     * Set the WordPress query.
+     *
+     * @param  WP_Query
+     * @return void
+     */
     public function setQuery($query)
     {
         $this->query = collect(
