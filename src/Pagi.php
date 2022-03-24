@@ -51,22 +51,30 @@ class Pagi
      */
     protected function prepare()
     {
-        $this->query = collect(
-            Arr::get($GLOBALS, 'wp_query')->query_vars ?? []
-        )->filter();
+        $isGlobalQuery = false;
+
+        if (! isset($this->query)) {
+            $this->query = collect(
+                Arr::get($GLOBALS, 'wp_query')->query_vars ?? []
+            )->filter();
+
+            $isGlobalQuery = true;
+        }
 
         if ($this->query->isEmpty()) {
             return;
         }
 
-        $this->query->put('post_type', get_post_type());
+        if ($isGlobalQuery) {
+            $this->query->put('post_type', get_post_type());
 
-        if (is_tax()) {
-            $this->query->put('tax_query', [[
-                'taxonomy' => $this->query->get('taxonomy'),
-                'terms' => $this->query->get('term'),
-                'field' => 'name',
-            ]]);
+            if (is_tax()) {
+                $this->query->put('tax_query', [[
+                    'taxonomy' => $this->query->get('taxonomy'),
+                    'terms' => $this->query->get('term'),
+                    'field' => 'name',
+                ]]);
+            }
         }
 
         $this->perPage = $this->query->get('posts_per_page');
@@ -99,5 +107,18 @@ class Pagi
             $this->perPage,
             $this->currentPage
         );
+    }
+
+    /**
+     * Set the WordPress query.
+     *
+     * @param  WP_Query
+     * @return void
+     */
+    public function setQuery($query)
+    {
+        $this->query = collect(
+            $query->query_vars ?? []
+        )->filter();
     }
 }
