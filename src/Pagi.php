@@ -35,16 +35,6 @@ class Pagi
     protected $perPage = 1;
 
     /**
-     * Create a new Pagi instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->items = collect();
-    }
-
-    /**
      * Prepare the WordPress pagination.
      *
      * @return void
@@ -57,7 +47,7 @@ class Pagi
             $this->query = collect(
                 Arr::get($GLOBALS, 'wp_query')->query_vars ?? []
             )->filter();
-
+            $this->items = collect()->range(0, $GLOBALS['wp_query']->found_posts);
             $isGlobalQuery = true;
         }
 
@@ -65,31 +55,8 @@ class Pagi
             return;
         }
 
-        if ($isGlobalQuery) {
-            $this->query->put('post_type', get_post_type());
-
-            if (is_tax()) {
-                $this->query->put('tax_query', [[
-                    'taxonomy' => $this->query->get('taxonomy'),
-                    'terms' => $this->query->get('term'),
-                    'field' => 'name',
-                ]]);
-            }
-        }
-
         $this->perPage = $this->query->get('posts_per_page');
         $this->currentPage = max(1, absint(get_query_var('paged')));
-
-        $this->items = $this->items->make(
-            get_posts(
-                $this->query->put('posts_per_page', '-1')->all()
-            )
-        )->map(function ($item) {
-            return [
-                'id'  => $item->ID,
-                'url' => get_the_permalink($item->ID)
-            ];
-        });
     }
 
     /**
@@ -117,6 +84,7 @@ class Pagi
      */
     public function setQuery($query)
     {
+        $this->items = collect()->range(0, $query->found_posts);
         $this->query = collect(
             $query->query_vars ?? []
         )->filter();

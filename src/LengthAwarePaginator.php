@@ -35,7 +35,7 @@ class LengthAwarePaginator extends Paginator
             $page = 1;
         }
 
-        $url = get_pagenum_link($page);
+        $url = get_pagenum_link($page, false);
 
         if (count($this->query) > 0) {
             return $url .
@@ -54,10 +54,18 @@ class LengthAwarePaginator extends Paginator
      */
     public function nextPageUrl()
     {
-        return next_posts(
-            count($this->items),
-            false
-        );
+        global $paged;
+        $max_page = count($this->items);
+
+        if ( ! is_single() ) {
+            if ( ! $paged ) {
+                $paged = 1;
+            }
+            $nextpage = (int) $paged + 1;
+            if ( ! $max_page || $max_page >= $nextpage ) {
+                return get_pagenum_link( $nextpage, false );
+            }
+        }
     }
 
     /**
@@ -67,7 +75,15 @@ class LengthAwarePaginator extends Paginator
      */
     public function previousPageUrl()
     {
-        return previous_posts(false);
+        global $paged;
+
+        if ( ! is_single() ) {
+            $nextpage = (int) $paged - 1;
+            if ( $nextpage < 1 ) {
+                $nextpage = 1;
+            }
+            return get_pagenum_link( $nextpage, false );
+        }
     }
 
     /**
