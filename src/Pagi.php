@@ -46,7 +46,7 @@ class Pagi
                 Arr::get($GLOBALS, 'wp_query')->query_vars ?? []
             )->filter();
 
-            $this->items = collect()->range(0, $GLOBALS['wp_query']->found_posts);
+            $this->items = collect()->range(0, Arr::get($GLOBALS, 'wp_query')->found_posts);
         }
 
         if ($this->query->isEmpty()) {
