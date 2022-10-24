@@ -77,7 +77,7 @@ class Pagi
     /**
      * Set the WordPress query.
      *
-     * @param  WP_Query
+     * @param  \WP_Query
      * @return void
      */
     public function setQuery($query)
