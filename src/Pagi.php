@@ -35,63 +35,26 @@ class Pagi
     protected $perPage = 1;
 
     /**
-     * Create a new Pagi instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->items = collect();
-    }
-
-    /**
      * Prepare the WordPress pagination.
      *
      * @return void
      */
     protected function prepare()
     {
-        $isGlobalQuery = false;
-
         if (! isset($this->query)) {
             $this->query = collect(
                 Arr::get($GLOBALS, 'wp_query')->query_vars ?? []
             )->filter();
 
-            $isGlobalQuery = true;
+            $this->items = collect()->range(0, Arr::get($GLOBALS, 'wp_query')->found_posts);
         }
 
         if ($this->query->isEmpty()) {
             return;
         }
 
-        if ($isGlobalQuery) {
-            if (! is_search()) {
-                $this->query->put('post_type', get_post_type());
-            }
-
-            if (is_tax()) {
-                $this->query->put('tax_query', [[
-                    'taxonomy' => $this->query->get('taxonomy'),
-                    'terms' => $this->query->get('term'),
-                    'field' => 'name',
-                ]]);
-            }
-        }
-
         $this->perPage = $this->query->get('posts_per_page');
         $this->currentPage = max(1, absint(get_query_var('paged')));
-
-        $this->items = $this->items->make(
-            get_posts(
-                $this->query->put('posts_per_page', '-1')->all()
-            )
-        )->map(function ($item) {
-            return [
-                'id'  => $item->ID,
-                'url' => get_the_permalink($item->ID)
-            ];
-        });
     }
 
     /**
@@ -114,11 +77,12 @@ class Pagi
     /**
      * Set the WordPress query.
      *
-     * @param  WP_Query
+     * @param  \WP_Query
      * @return void
      */
     public function setQuery($query)
     {
+        $this->items = collect()->range(0, $query->found_posts);
         $this->query = collect(
             $query->query_vars ?? []
         )->filter();
