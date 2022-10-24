@@ -55,15 +55,15 @@ class LengthAwarePaginator extends Paginator
     public function nextPageUrl()
     {
         global $paged;
-        $max_page = count($this->items);
 
-        if ( ! is_single() ) {
-            if ( ! $paged ) {
-                $paged = 1;
-            }
-            $nextpage = (int) $paged + 1;
-            if ( ! $max_page || $max_page >= $nextpage ) {
-                return get_pagenum_link( $nextpage, false );
+        $maxPage = count($this->items);
+
+        if (! is_single()) {
+            $paged = empty($paged) ? 1 : $paged;
+            $nextPage = (int) $paged + 1;
+
+            if (! $maxPage || $maxPage >= $nextPage) {
+                return get_pagenum_link($nextPage, false);
             }
         }
     }
@@ -77,12 +77,11 @@ class LengthAwarePaginator extends Paginator
     {
         global $paged;
 
-        if ( ! is_single() ) {
-            $nextpage = (int) $paged - 1;
-            if ( $nextpage < 1 ) {
-                $nextpage = 1;
-            }
-            return get_pagenum_link( $nextpage, false );
+        if (! is_single()) {
+            $nextPage = (int) $paged - 1;
+            $nextPage = $nextPage < 1 ? 1 : $nextPage;
+
+            return get_pagenum_link($nextPage, false);
         }
     }
 
