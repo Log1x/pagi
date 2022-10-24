@@ -66,7 +66,9 @@ class Pagi
         }
 
         if ($isGlobalQuery) {
-            $this->query->put('post_type', get_post_type());
+            if (! is_search()) {
+                $this->query->put('post_type', get_post_type());
+            }
 
             if (is_tax()) {
                 $this->query->put('tax_query', [[
