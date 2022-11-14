@@ -82,7 +82,7 @@ class Pagi
      */
     public function setQuery($query)
     {
-        $this->items = collect()->range(0, $query->found_posts);
+        $this->items = collect()->range(1, $query->found_posts);
         $this->query = collect(
             $query->query_vars ?? []
         )->filter();
