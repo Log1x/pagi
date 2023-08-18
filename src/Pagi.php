@@ -53,7 +53,7 @@ class Pagi
             return;
         }
 
-        $this->perPage = $this->query->get('posts_per_page');
+        $this->perPage = $this->query->get('posts_per_page', 1);
         $this->currentPage = max(1, absint(get_query_var('paged')));
     }
 
