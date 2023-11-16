@@ -2,7 +2,7 @@
 
 namespace Log1x\Pagi;
 
-use Roots\Acorn\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
 class PagiServiceProvider extends ServiceProvider
